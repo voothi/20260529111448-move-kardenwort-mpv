@@ -1,6 +1,6 @@
 # Move Kardenwort MPV Vault Utility
 
-[![Version](https://img.shields.io/badge/version-v1.1.0-blue)](https://github.com/voothi/20260529111448-move-kardenwort-mpv)
+[![Version](https://img.shields.io/badge/version-v1.2.0-blue)](https://github.com/voothi/20260529111448-move-kardenwort-mpv)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A focused, highly efficient utility tool designed to extract and move all files (notes and image/media assets) belonging to a specific subproject from a larger Obsidian vault into a clean, standalone, independent vault directory based on recursive Wikilink traversal.
@@ -27,6 +27,7 @@ When working inside a massive Obsidian vault (such as `U:\voothi.vault\voothi`),
 - **Asset Relocation**: Detects linked `.png`, `.jpg`, and other media files in your notes and relocates them into a designated assets subfolder.
 - **Journal Filter Safety**: Intentionally skips standard daily notes matching `YYYY-MM-DD` patterns to prevent pulling in the main journal timelines.
 - **MOC Cleaner / Formatter**: Loops through MOC listings to generate and prepend clean, alphanumeric English-only descriptions to all ZID lines while preserving original body content.
+- **X Prefix and Alias Cleanup**: Scans the relocated vault to recursively rename files, strip `X` patterns from titles/aliases, and automatically update all internal Wikilinks/references.
 - **Security Scanner**: Includes an audit tool to automatically scan the newly generated vault for potential passwords, private API keys, or sensitive personal credentials.
 
 [Return to Top](#move-kardenwort-mpv-vault-utility)
@@ -42,7 +43,8 @@ When working inside a massive Obsidian vault (such as `U:\voothi.vault\voothi`),
 │   ├── trace_links.py       # Dry-run graph scanning and missing link detection
 │   ├── move_vault.py        # Relocates notes and assets to the destination vault
 │   ├── check_sensitive.py   # Scans relocated vault for potential PII or passwords
-│   └── clean_moc.py         # Standardizes and prepends descriptions to MOC ZID lines
+│   ├── clean_moc.py         # Standardizes and prepends descriptions to MOC ZID lines
+│   └── remove_xs.py         # Renames notes, cleans X prefixes in aliases/headers, and rewrites Wikilinks
 ```
 
 [Return to Top](#move-kardenwort-mpv-vault-utility)
@@ -99,6 +101,12 @@ Cleans, standardizes, and prepends short, English-only descriptions to all ZID l
 python src/clean_moc.py
 ```
 
+### 5. Remove X Prefixes and Clean Headers
+Automatically renames all notes containing `x-x-x-`, `x-x-`, or `x-` prefixes in the isolated vault, updates their aliases and H1 headers, and rewrites all internal Wikilinks recursively to point to the clean targets:
+```powershell
+python src/remove_xs.py
+```
+
 [Return to Top](#move-kardenwort-mpv-vault-utility)
 
 ## Kardenwort Ecosystem
@@ -107,7 +115,8 @@ This utility is part of the **[Kardenwort](https://github.com/kardenwort)** envi
 [Return to Top](#move-kardenwort-mpv-vault-utility)
 
 ## Signature
-- **Project Anchor ZID**: `20260529131050`
+- **Project Anchor ZID**: `20260529150742`
+- **Signatory**: Antigravity AI Coding Assistant
 
 [Return to Top](#move-kardenwort-mpv-vault-utility)
 
