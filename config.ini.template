@@ -1,0 +1,12 @@
+[Vault]
+# Path to the source Obsidian vault
+source_vault = U:\voothi.vault\voothi
+
+# Relative path or absolute path to the root note of the subproject MOC
+root_file = U:\voothi.vault\voothi\journal\daily\20260429111108-kardenwort-mpv.md
+
+# Path to the target new vault directory
+dest_vault = U:\voothi.vault\kardenwort-mpv
+
+# Subfolder inside dest_vault where all media assets/images will be placed
+assets_subfolder = assets
