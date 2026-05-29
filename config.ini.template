@@ -10,3 +10,7 @@ dest_vault = U:\voothi.vault\kardenwort-mpv
 
 # Subfolder inside dest_vault where all media assets/images will be placed
 assets_subfolder = assets
+
+[MOC]
+# Path to the conversation file to format/clean MOC lines
+conversation_file = U:\voothi.vault\kardenwort-mpv\conversations\20260529011639-conversation.md

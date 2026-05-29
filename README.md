@@ -1,6 +1,6 @@
 # Move Kardenwort MPV Vault Utility
 
-[![Version](https://img.shields.io/badge/version-v1.0.0-blue)](https://github.com/voothi/20260529111448-move-kardenwort-mpv)
+[![Version](https://img.shields.io/badge/version-v1.1.0-blue)](https://github.com/voothi/20260529111448-move-kardenwort-mpv)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A focused, highly efficient utility tool designed to extract and move all files (notes and image/media assets) belonging to a specific subproject from a larger Obsidian vault into a clean, standalone, independent vault directory based on recursive Wikilink traversal.
@@ -12,6 +12,7 @@ A focused, highly efficient utility tool designed to extract and move all files 
 - [Configuration](#configuration)
 - [Usage](#usage)
 - [Kardenwort Ecosystem](#kardenwort-ecosystem)
+- [Signature](#signature)
 - [License](#license)
 
 ---
@@ -25,6 +26,7 @@ When working inside a massive Obsidian vault (such as `U:\voothi.vault\voothi`),
 - **Recursive Wikilink Graph Traversal**: Automatically finds all direct and indirect document dependencies starting from the root note.
 - **Asset Relocation**: Detects linked `.png`, `.jpg`, and other media files in your notes and relocates them into a designated assets subfolder.
 - **Journal Filter Safety**: Intentionally skips standard daily notes matching `YYYY-MM-DD` patterns to prevent pulling in the main journal timelines.
+- **MOC Cleaner / Formatter**: Loops through MOC listings to generate and prepend clean, alphanumeric English-only descriptions to all ZID lines while preserving original body content.
 - **Security Scanner**: Includes an audit tool to automatically scan the newly generated vault for potential passwords, private API keys, or sensitive personal credentials.
 
 [Return to Top](#move-kardenwort-mpv-vault-utility)
@@ -39,7 +41,8 @@ When working inside a massive Obsidian vault (such as `U:\voothi.vault\voothi`),
 ├── src/                     # Source directory containing utilities
 │   ├── trace_links.py       # Dry-run graph scanning and missing link detection
 │   ├── move_vault.py        # Relocates notes and assets to the destination vault
-│   └── check_sensitive.py   # Scans relocated vault for potential PII or passwords
+│   ├── check_sensitive.py   # Scans relocated vault for potential PII or passwords
+│   └── clean_moc.py         # Standardizes and prepends descriptions to MOC ZID lines
 ```
 
 [Return to Top](#move-kardenwort-mpv-vault-utility)
@@ -62,6 +65,10 @@ dest_vault = U:\voothi.vault\kardenwort-mpv
 
 # Subfolder inside dest_vault where all media assets/images will be placed
 assets_subfolder = assets
+
+[MOC]
+# Path to the conversation file to format/clean MOC lines
+conversation_file = U:\voothi.vault\kardenwort-mpv\conversations\20260529011639-conversation.md
 ```
 
 [Return to Top](#move-kardenwort-mpv-vault-utility)
@@ -86,10 +93,21 @@ Ensure that your new vault does not contain any passwords, private tokens, or pe
 python src/check_sensitive.py
 ```
 
+### 4. Clean and Format MOC
+Cleans, standardizes, and prepends short, English-only descriptions to all ZID lines under the MOC section of your conversation file:
+```powershell
+python src/clean_moc.py
+```
+
 [Return to Top](#move-kardenwort-mpv-vault-utility)
 
 ## Kardenwort Ecosystem
 This utility is part of the **[Kardenwort](https://github.com/kardenwort)** environment, designed to manage sub-components, documentation, and standalone vault assets efficiently.
+
+[Return to Top](#move-kardenwort-mpv-vault-utility)
+
+## Signature
+- **Project Anchor ZID**: `20260529131050`
 
 [Return to Top](#move-kardenwort-mpv-vault-utility)
 

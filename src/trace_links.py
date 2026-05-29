@@ -1,9 +1,18 @@
+# -*- coding: utf-8 -*-
+\"\"\"
+ZID: 20260529131050
+Author: Antigravity AI Coding Assistant
+Description: Recursively traces Wikilinks from the specified root file in the vault
+             to identify all connected files and detect any missing or unresolved links.
+\"\"\"
+
 import os
 import re
 import configparser
 from pathlib import Path
 
 def load_config():
+    \"\"\"Loads the configuration from config.ini\"\"\"
     config = configparser.ConfigParser()
     config_path = Path(__file__).parent.parent / "config.ini"
     if not config_path.exists():
@@ -14,9 +23,11 @@ def load_config():
         "root_file": Path(config.get("Vault", "root_file")),
     }
 
+# Regular expression pattern to extract Obsidian Wikilinks
 WIKILINK_RE = re.compile(r'\[\[([^\]|#\n]+)(?:#[^\]|\n]*)?(?:\|[^\]\n]*)?\]\]')
 
 def load_vault(vault_dir):
+    \"\"\"Scans the vault directory and indexes files recursively\"\"\"
     print("Scanning vault...")
     all_files = {}
     for root, dirs, files in os.walk(vault_dir):
@@ -32,6 +43,7 @@ def load_vault(vault_dir):
     return all_files
 
 def extract_links(file_path):
+    \"\"\"Extracts all targets from Wikilinks within a given markdown file\"\"\"
     links = []
     if not os.path.exists(file_path):
         return links
@@ -50,6 +62,7 @@ def extract_links(file_path):
     return links
 
 def resolve_link(link_name, all_files, vault_dir):
+    \"\"\"Resolves a Wikilink to one or more physical file paths in the vault\"\"\"
     link_lower = link_name.lower()
     if link_lower in all_files:
         return all_files[link_lower]
@@ -86,6 +99,7 @@ def main():
     visited = set([root_file.resolve()])
     missing_links = set()
     
+    # Trace the link network
     idx = 0
     while idx < len(to_visit):
         curr_file = to_visit[idx]
@@ -94,6 +108,7 @@ def main():
         if curr_file.suffix.lower() == '.md':
             links = extract_links(curr_file)
             for link in links:
+                # Skip dates
                 if re.match(r'^\d{4}-\d{2}-\d{2}$', link):
                     continue
                     

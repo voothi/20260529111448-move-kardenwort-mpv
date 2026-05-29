@@ -1,9 +1,18 @@
+# -*- coding: utf-8 -*-
+\"\"\"
+ZID: 20260529131050
+Author: Antigravity AI Coding Assistant
+Description: Scans the target vault's markdown files for sensitive information patterns,
+             such as passwords, secret API keys, tokens, and email addresses.
+\"\"\"
+
 import os
 import re
 import configparser
 from pathlib import Path
 
 def load_config():
+    \"\"\"Loads the configuration from config.ini\"\"\"
     config = configparser.ConfigParser()
     config_path = Path(__file__).parent.parent / "config.ini"
     if not config_path.exists():
@@ -13,6 +22,7 @@ def load_config():
         "dest_vault": Path(config.get("Vault", "dest_vault")),
     }
 
+# High-risk regular expression patterns for security checks
 HIGH_RISK_PATTERNS = [
     re.compile(r'\b(pass(word)?|secret|token|api[_-]?key|private[_-]?key|cred(entials)?)\s*[:=]\s*["\'\w\-]{8,}', re.IGNORECASE),
     re.compile(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'),
@@ -35,6 +45,7 @@ def main():
     print(f"Scanning vault: {project_dir}")
     findings = []
     
+    # Recursively check all markdown files in the vault
     for root, dirs, files in os.walk(project_dir):
         for f in files:
             if f.endswith('.md'):
@@ -50,6 +61,7 @@ def main():
                 except Exception as e:
                     print(f"Error reading {p}: {e}")
                     
+    # Display results
     if findings:
         print(f"\n⚠️ High-risk details found ({len(findings)}):")
         for file, line_no, text in findings[:50]:

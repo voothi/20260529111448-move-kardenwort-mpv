@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+\"\"\"
+ZID: 20260529131050
+Author: Antigravity AI Coding Assistant
+Description: Recursively traces and copies Obsidian markdown files and associated media assets 
+             from a source vault starting from a root file (based on Wikilinks) 
+             to an independent target destination vault folder.
+\"\"\"
+
 import os
 import re
 import shutil
@@ -5,6 +14,7 @@ import configparser
 from pathlib import Path
 
 def load_config():
+    \"\"\"Loads the configuration from config.ini\"\"\"
     config = configparser.ConfigParser()
     config_path = Path(__file__).parent.parent / "config.ini"
     if not config_path.exists():
@@ -17,9 +27,11 @@ def load_config():
         "assets_subfolder": config.get("Vault", "assets_subfolder"),
     }
 
+# Regular expression pattern to extract Obsidian Wikilinks
 WIKILINK_RE = re.compile(r'\[\[([^\]|#\n]+)(?:#[^\]|\n]*)?(?:\|[^\]\n]*)?\]\]')
 
 def load_vault(vault_dir):
+    \"\"\"Scans the source vault directory recursively and builds an index of all files\"\"\"
     print("Scanning source vault...")
     all_files = {}
     for root, dirs, files in os.walk(vault_dir):
@@ -34,6 +46,7 @@ def load_vault(vault_dir):
     return all_files
 
 def extract_links(file_path):
+    \"\"\"Extracts all targets from Wikilinks within a given markdown file\"\"\"
     links = []
     if not os.path.exists(file_path):
         return links
@@ -52,6 +65,7 @@ def extract_links(file_path):
     return links
 
 def resolve_link(link_name, all_files, vault_dir):
+    \"\"\"Resolves a Wikilink to one or more physical file paths in the vault\"\"\"
     link_lower = link_name.lower()
     if link_lower in all_files:
         return all_files[link_lower]
@@ -89,6 +103,7 @@ def main():
     to_visit = [root_file]
     visited = set([root_file.resolve()])
     
+    # Breadth-first traversal to discover all linked notes recursively
     idx = 0
     while idx < len(to_visit):
         curr_file = to_visit[idx]
@@ -97,6 +112,7 @@ def main():
         if curr_file.suffix.lower() == '.md':
             links = extract_links(curr_file)
             for link in links:
+                # Skip date links (e.g. daily notes format 2026-05-29)
                 if re.match(r'^\d{4}-\d{2}-\d{2}$', link):
                     continue
                     
@@ -113,6 +129,7 @@ def main():
     dest_assets_dir.mkdir(parents=True, exist_ok=True)
     
     moved_count = 0
+    # Copy files while maintaining file types (notes under dest_dir, assets under dest_assets_dir)
     for file_path in visited:
         if not file_path.exists():
             print(f"File not found, skipping: {file_path}")
