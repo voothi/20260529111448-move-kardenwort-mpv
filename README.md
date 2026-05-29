@@ -1,6 +1,6 @@
 # Move Kardenwort MPV Vault Utility
 
-[![Version](https://img.shields.io/badge/version-v1.0.0-blue)](https://github.com/voothi/20260529111448-move-kwt-mpv)
+[![Version](https://img.shields.io/badge/version-v1.0.0-blue)](https://github.com/voothi/20260529111448-move-kardenwort-mpv)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A focused, highly efficient utility tool designed to extract and move all files (notes and image/media assets) belonging to a specific subproject from a larger Obsidian vault into a clean, standalone, independent vault directory based on recursive Wikilink traversal.
@@ -31,7 +31,7 @@ When working inside a massive Obsidian vault (such as `U:\voothi.vault\voothi`),
 
 ## Project Structure
 ```text
-20260529111448-move-kwt-mpv/
+20260529111448-move-kardenwort-mpv/
 ├── config.ini               # Active settings (vault paths, root file, and outputs)
 ├── config.ini.template      # Settings template for clean configuration
 ├── .gitignore               # Excludes python caches and local configs
