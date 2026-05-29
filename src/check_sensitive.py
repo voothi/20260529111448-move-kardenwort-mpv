@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-\"\"\"
-ZID: 20260529131050
+"""
+ZID: 20260529150341
 Author: Antigravity AI Coding Assistant
 Description: Scans the target vault's markdown files for sensitive information patterns,
              such as passwords, secret API keys, tokens, and email addresses.
-\"\"\"
+"""
 
 import os
 import re
@@ -12,7 +12,7 @@ import configparser
 from pathlib import Path
 
 def load_config():
-    \"\"\"Loads the configuration from config.ini\"\"\"
+    """Loads the configuration from config.ini"""
     config = configparser.ConfigParser()
     config_path = Path(__file__).parent.parent / "config.ini"
     if not config_path.exists():

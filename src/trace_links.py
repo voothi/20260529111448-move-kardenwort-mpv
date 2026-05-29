@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-\"\"\"
-ZID: 20260529131050
+"""
+ZID: 20260529150341
 Author: Antigravity AI Coding Assistant
 Description: Recursively traces Wikilinks from the specified root file in the vault
              to identify all connected files and detect any missing or unresolved links.
-\"\"\"
+"""
 
 import os
 import re
@@ -12,7 +12,7 @@ import configparser
 from pathlib import Path
 
 def load_config():
-    \"\"\"Loads the configuration from config.ini\"\"\"
+    """Loads the configuration from config.ini"""
     config = configparser.ConfigParser()
     config_path = Path(__file__).parent.parent / "config.ini"
     if not config_path.exists():
@@ -27,7 +27,7 @@ def load_config():
 WIKILINK_RE = re.compile(r'\[\[([^\]|#\n]+)(?:#[^\]|\n]*)?(?:\|[^\]\n]*)?\]\]')
 
 def load_vault(vault_dir):
-    \"\"\"Scans the vault directory and indexes files recursively\"\"\"
+    """Scans the vault directory and indexes files recursively"""
     print("Scanning vault...")
     all_files = {}
     for root, dirs, files in os.walk(vault_dir):
@@ -43,7 +43,7 @@ def load_vault(vault_dir):
     return all_files
 
 def extract_links(file_path):
-    \"\"\"Extracts all targets from Wikilinks within a given markdown file\"\"\"
+    """Extracts all targets from Wikilinks within a given markdown file"""
     links = []
     if not os.path.exists(file_path):
         return links
@@ -62,7 +62,7 @@ def extract_links(file_path):
     return links
 
 def resolve_link(link_name, all_files, vault_dir):
-    \"\"\"Resolves a Wikilink to one or more physical file paths in the vault\"\"\"
+    """Resolves a Wikilink to one or more physical file paths in the vault"""
     link_lower = link_name.lower()
     if link_lower in all_files:
         return all_files[link_lower]

@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-\"\"\"
-ZID: 20260529131050
+"""
+ZID: 20260529150341
 Author: Antigravity AI Coding Assistant
 Description: Loops through all lines in the designated conversation file's MOC section,
              extracts the 14-digit ZID, cleans and normalizes the description into English
              (one phrase, ending with a period, no newlines, no special characters),
              and prepends it immediately after the ZID, keeping the original body text intact.
-\"\"\"
+"""
 
 import os
 import re
@@ -14,7 +14,7 @@ import configparser
 from pathlib import Path
 
 def load_config():
-    \"\"\"Loads the configuration from config.ini\"\"\"
+    """Loads the configuration from config.ini"""
     config = configparser.ConfigParser()
     config_path = Path(__file__).parent.parent / "config.ini"
     if not config_path.exists():
@@ -25,11 +25,11 @@ def load_config():
     }
 
 def clean_description(desc):
-    \"\"\"
+    """
     Cleans the given description to produce a single English phrase.
     Removes paths, urls, commands, non-ASCII characters (e.g., Cyrillic), 
     and special characters, and appends a single trailing period.
-    \"\"\"
+    """
     # Remove URLs, slash commands, markdown/wikilinks, and paths
     desc = re.sub(r'https?://\S+', '', desc)
     desc = re.sub(r'/[a-zA-Z0-9_-]+', '', desc)
